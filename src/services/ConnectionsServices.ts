@@ -1,0 +1,48 @@
+import { getCustomRepository, Repository } from "typeorm";
+
+import Connection from "../entities/Connection";
+import ConnectionsRepository from "../repositories/ConnectionsRepository";
+
+interface IConnectionsServices {
+  admin_id?: string,
+  user_id: string,
+  socket_id?: string,
+  id?: string
+}
+
+class ConnectionsServices {
+
+  private ConnectionsRepository: Repository<Connection>;
+
+  constructor() {
+    this.ConnectionsRepository = getCustomRepository(ConnectionsRepository);
+  }
+
+  async create({ admin_id, user_id, socket_id, id }: IConnectionsServices) {
+
+    const connection = this.ConnectionsRepository.create({
+      admin_id,
+      user_id,
+      socket_id,
+      id
+    });
+
+    await this.ConnectionsRepository.save(connection);
+
+    return connection;
+
+  }
+
+  async findByUserId(user_id: string) {
+
+    const connection = await this.ConnectionsRepository.findOne({
+      user_id
+    });
+
+    return connection;
+
+  }
+
+}
+
+export default ConnectionsServices;
