@@ -9,7 +9,7 @@ interface IMessagesServices {
   text: string,
 }
 
-class SettingsServices {
+class MessagesServices {
 
   private messagesRepository: Repository<Message>;
 
@@ -48,4 +48,4 @@ class SettingsServices {
 
 }
 
-export default SettingsServices;
+export default MessagesServices;
